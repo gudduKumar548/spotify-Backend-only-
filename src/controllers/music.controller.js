@@ -35,4 +35,15 @@ async function createAlbum(req, res) {
         album,
     });
 }
-module.exports = { createMusic, createAlbum };
+
+async function getAllmusic(req, res) {
+    if (req.user.role === "artist") {
+        return res.status(401).json({ message: "you don't have an access" });
+    }
+    const musics = await musicModel.find();
+    if (!musics) {
+        return res.status(403).json({ message: "Music not found" });
+    }
+    return res.status(200).json(musics);
+}
+module.exports = { createMusic, createAlbum, getAllmusic };
