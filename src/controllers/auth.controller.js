@@ -1,9 +1,11 @@
 const userModel = require('../models/user.model');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const blacklistedTokenModel = require('../models/blacklisted.Token.model');
+require('dotenv').config();
 
 async function handleUserRegister(req, res) {
-    const { username, email, password, role="user" } = req.body;
+    const { username, email, password, role = "user" } = req.body;
 
     const isUserAlreadyExists = await userModel.findOne({
         $or: [{ username }, { email }]
@@ -15,17 +17,17 @@ async function handleUserRegister(req, res) {
     const user = await userModel.create({
         username,
         email,
-        password:hashedPassword,
+        password: hashedPassword,
         role
     });
 
     const token = jwt.sign(
         {
             id: user._id,
-            role:user.role,
+            role: user.role,
         },
         process.env.JWT_SECRET,
-        { expiresIn:"1d" }
+        { expiresIn: "1d" }
     );
     res.cookie("token", token);
 
@@ -34,7 +36,7 @@ async function handleUserRegister(req, res) {
         user: {
             username: user.username,
             email: user.email,
-            role:user.role
+            role: user.role
         }
     })
 }
@@ -42,7 +44,7 @@ async function handleUserRegister(req, res) {
 async function handleLoginUser(req, res) {
     try {
         const { username, email, password } = req.body;
-        const user= await userModel.findOne({
+        const user = await userModel.findOne({
             $or: [{ username }, { email }]
         });
         if (!user) {
@@ -62,12 +64,12 @@ async function handleLoginUser(req, res) {
         );
         res.cookie('token', token);
         return res.status(200).json({
-            message: "successfully logged-in", 
+            message: "successfully logged-in",
             user: {
                 id: user._id,
                 username: user.username,
                 email: user.email,
-                role:user.role
+                role: user.role
             }
         });
     } catch (error) {
@@ -76,4 +78,20 @@ async function handleLoginUser(req, res) {
 
 }
 
-module.exports = { handleUserRegister, handleLoginUser};
+async function handleLogOut(req, res) {
+    try {
+        const token = req.token;
+        const expiresAt = new Date(req.user.exp * 1000);
+
+        await blacklistedTokenModel.create({
+            token,
+            expiresAt
+        });
+        res.clearCookie("token");
+        return res.status(200).json({ message: "Logged out successfully" });
+    } catch (error) {
+        return res.status(500).json({ message: "Logout failed" });
+    }
+}
+
+module.exports = { handleUserRegister, handleLoginUser, handleLogOut };

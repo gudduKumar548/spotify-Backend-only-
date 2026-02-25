@@ -37,13 +37,32 @@ async function createAlbum(req, res) {
 }
 
 async function getAllmusic(req, res) {
-    if (req.user.role === "artist") {
-        return res.status(401).json({ message: "you don't have an access" });
-    }
-    const musics = await musicModel.find();
+    const musics = await musicModel.find().limit(10).populate("artist", "username email");
     if (!musics) {
         return res.status(403).json({ message: "Music not found" });
     }
-    return res.status(200).json(musics);
+    return res.status(200).json({musics});
 }
-module.exports = { createMusic, createAlbum, getAllmusic };
+async function getAllAlbums(req, res) {
+    const albums = await albumModel.find().select("title artist").populate("artist", "username email");
+    return res.status(200).json({
+        message: "Album fetched successfully",
+        album: albums
+    });
+}
+
+async function getAlbumById(req, res) {
+    const id = req.params.id;
+    
+     const album = await albumModel
+      .findById(id)
+      .populate("artist", "username email")
+      .populate("musics");
+    console.log(album);
+    if (!album) {
+        return res.status(403).json({ message: "album not found" });
+    }
+    return res.status(200).json(album);
+}
+
+module.exports = { createMusic, createAlbum, getAllmusic,getAllAlbums, getAlbumById };
