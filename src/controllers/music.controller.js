@@ -1,6 +1,7 @@
 const musicModel = require('../models/music.model');
 const albumModel = require('../models/album.model');
 const { uploadFile } = require('../services/storage.service');
+const playlistModel = require('../models/playlist.model');
 require('dotenv').config();
 
 async function createMusic(req, res) {
@@ -36,6 +37,14 @@ async function createAlbum(req, res) {
     });
 }
 
+async function createPlaylist(req, res) {
+    const playlist = await playlistModel.create({
+        name: req.body.name,
+        user: req.user.id
+    });
+    return res.status(201).json(playlist);
+}
+
 async function getAllmusic(req, res) {
     const musics = await musicModel.find().limit(10).populate("artist", "username email");
     if (!musics) {
@@ -43,6 +52,7 @@ async function getAllmusic(req, res) {
     }
     return res.status(200).json({musics});
 }
+
 async function getAllAlbums(req, res) {
     const albums = await albumModel.find().select("title artist").populate("artist", "username email");
     return res.status(200).json({

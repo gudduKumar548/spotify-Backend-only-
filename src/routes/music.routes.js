@@ -7,10 +7,10 @@ const router = express.Router();
 const upload = multer({ storage: multer.memoryStorage() });
 
 router.post('/upload', authArtist , upload.single('music'), createMusic);
-router.post('/album', authArtist , createAlbum);
+router.post('/albums', authArtist , createAlbum);
 
-router.get('/', authUser, getAllmusic);
-router.get('/album', authUser, getAllAlbums);
+router.get('/songs', authUser, getAllmusic);
+router.get('/albums', authUser, getAllAlbums);
 router.get('/album/:id', authUser, getAlbumById);
 
 module.exports = router;
