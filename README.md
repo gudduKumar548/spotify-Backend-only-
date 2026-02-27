@@ -1,198 +1,205 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<body>
-<div class="container">
-<h1>Spotify Backend Only 🎧</h1>
-<p>
-A role-based RESTful API for a music streaming platform where listeners can explore and play songs 
-while artists can manage albums and tracks. The project focuses on secure authentication, 
-role-based authorization, and a scalable backend architecture built with Node.js and Express.js.
+<h1 align="center">🎧 Spotify Backend API</h1>
+
+<p align="center">
+  <b>A Role-Based RESTful Music Streaming Backend built with Node.js express, MongoDB & ImageKit</b>
 </p>
 
-<hr>
+<p align="center">
+  <img src="https://img.shields.io/badge/Node.js-Backend-green?style=for-the-badge&logo=node.js" />
+  <img src="https://img.shields.io/badge/Express.js-Framework-black?style=for-the-badge&logo=express" />
+  <img src="https://img.shields.io/badge/MongoDB-Database-green?style=for-the-badge&logo=mongodb" />
+  <img src="https://img.shields.io/badge/JWT-Authentication-blue?style=for-the-badge&logo=jsonwebtokens" />
+  <img src="https://img.shields.io/badge/ImageKit-Media%20Storage-orange?style=for-the-badge" />
+</p>
 
-<h2>🧠 Overview</h2>
-<ul>
-    <li>User authentication (signup/login)</li>
-    <li>Role-based access for listeners and artists</li>
-    <li>CRUD operations for songs, albums, playlists, and artists</li>
-    <li>Token-based secure API access</li>
-    <li>Scalable backend architecture</li>
-</ul>
+---
 
-<hr>
+## 🧠 Overview
 
-<h2>🛠️ Features</h2>
-<ul>
-    <li>Role-based authentication</li>
-    <li>Secure login & token management</li>
-    <li>RESTful API design</li>
-    <li>CRUD for songs & albums</li>
-    <li>Playlist & music exploration endpoints</li>
-    <li>Modular and scalable structure</li>
-</ul>
+A role-based RESTful API for a music streaming platform where listeners can explore and play songs  
+while artists can manage albums and tracks.
 
-<hr>
+The project focuses on:
 
-<h2>📁 Project Structure</h2>
-<code>
-spotify-Backend-only-<br>
-├── src/<br>
-├── server.js<br>
-├── package.json<br>
-├── .gitignore<br>
-├── package-lock.json<br>
+- User authentication (Signup/Login)
+- Role-based authorization (Artist & Listener)
+- CRUD operations for songs, albums & playlists
+- Token-based secure API access
+- Scalable backend architecture
+
+---
+
+## ✨ Features
+
+- 👤 User Registration & Login  
+- 🔐 JWT-based Authentication  
+- 🎵 Songs & Albums Management  
+- 🎤 Role-Based Access Control  
+- 📂 Media Upload using ImageKit  
+- 🗄 MongoDB Database Integration  
+- 🔄 RESTful API Design  
+- ⚡ Modular & Scalable Structure  
+
+---
+
+## 📂 Project Structure
+
+```bash
+spotify-Backend-only/
+│
+├── src/
+├── models/
+├── routes/
+├── controllers/
+├── middleware/
+├── config/
+├── server.js
+├── package.json
 └── README.md
-</code>
+```
 
-<hr>
-<h2>🚀 Technologies Used</h2>
-<table>
-    <tr>
-        <th>Category</th>
-        <th>Tools / Libraries</th>
-    </tr>
-    <tr>
-        <td>Backend</td>
-        <td>Node.js, Express.js</td>
-    </tr>
-    <tr>
-        <td>Database</td>
-        <td>MongoDB, Mongoose</td>
-    </tr>
-    <tr>
-        <td>Authentication</td>
-        <td>JWT (JSON Web Token)</td>
-    </tr>
-    <tr>
-        <td>Media Storage</td>
-        <td>ImageKit</td>
-    </tr>
-    <tr>
-        <td>Package Manager</td>
-        <td>npm</td>
-    </tr>
-    <tr>
-        <td>Language</td>
-        <td>JavaScript</td>
-    </tr>
-</table>
-<hr>
+---
 
-<h2>🔧 Installation</h2>
+## 🚀 Technologies Used
 
-<h3>1. Clone the Repository</h3>
-<code>
-git clone https://github.com/gudduKumar548/spotify-Backend-only-<br>
+| Category | Tools / Libraries |
+|----------|-------------------|
+| Backend | Node.js, Express.js |
+| Database | MongoDB, Mongoose |
+| Authentication | JWT (JSON Web Token), bcrypt |
+| Media Storage | ImageKit |
+| File Upload | multer |
+| Environment Config | dotenv |
+| Validation | express-validator |
+| Package Manager | npm |
+| Language | JavaScript |
+
+---
+
+## ⚙️ Installation & Setup
+
+### 1️⃣ Clone Repository
+
+```bash
+git clone https://github.com/gudduKumar548/spotify-Backend-only-.git
 cd spotify-Backend-only-
-</code>
+```
 
-<h3>2. Install Dependencies</h3>
-<code>
-npm install express mongoose jsonwebtoken @imagekit/nodejs multer nodemon bcrypt cookie-parser dotenv express-validator 
-</code>
+### 2️⃣ Install Dependencies
 
-<h3>3. Setup Environment Variables (.env file)</h3>
-<code>
-PORT=3000<br>
-DATABASE_URL=your_database_connection_string<br>
+```bash
+npm install
+```
+
+### 3️⃣ Setup Environment Variables
+
+Create a `.env` file:
+
+```env
+PORT=3000
+DATABASE_URL=your_mongodb_connection_string
 JWT_SECRET=your_secret_key
+
+IMAGEKIT_PUBLIC_KEY=your_public_key
 IMAGEKIT_PRIVATE_KEY=your_private_key
-</code>
+IMAGEKIT_URL_ENDPOINT=your_url_endpoint
+```
 
-<h3>4. Start the Server</h3>
-<code>
+### 4️⃣ Start Server
+
+```bash
 npm start
-</code>
+```
 
-<hr>
+Server runs at:
 
-<h2>🔌 Example API Endpoints</h2>
+```
+http://localhost:3000
+```
 
-<h3>Authentication</h3>
-<table>
-    <tr>
-        <th>Method</th>
-        <th>Route</th>
-        <th>Description</th>
-    </tr>
-    <tr>
-        <td>POST</td>
-        <td>/api/auth/register</td>
-        <td>Register new user</td>
-    </tr>
-    <tr>
-        <td>POST</td>
-        <td>/api/auth/login</td>
-        <td>Login and receive token</td>
-    </tr>
-</table>
+---
 
-<h3>Music Resources</h3>
-<table>
-    <tr>
-        <th>Method</th>
-        <th>Route</th>
-        <th>Description</th>
-    </tr>
-    <tr>
-        <td>GET</td>
-        <td>/api/songs</td>
-        <td>List all songs</td>
-    </tr>
-    <tr>
-        <td>POST</td>
-        <td>/api/albums</td>
-        <td>Add new album (Artist only)</td>
-    </tr>
-    <tr>
-        <td>DELETE</td>
-        <td>/api/playlists/:id</td>
-        <td>Delete playlist</td>
-    </tr>
-</table>
+## 🔑 Example API Endpoints
 
-<hr>
+### 🔐 Authentication
 
-<h2>🧪 Testing</h2>
-<p>
-Use tools like Postman or Insomnia to test API endpoints. 
-Make sure to include your JWT token in protected routes.
-</p>
+| Method | Route | Description |
+|--------|-------|------------|
+| POST | `/api/auth/register` | Register new user |
+| POST | `/api/auth/login` | Login and receive token |
 
-<hr>
+---
 
-<h2>🚀 Usage</h2>
-<p>
+### 🎵 Music Resources
+
+| Method | Route | Description |
+|--------|-------|------------|
+| GET | `/api/songs` | List all songs |
+| POST | `/api/songs` | Upload song (Artist only) |
+| POST | `/api/albums` | Add new album (Artist only) |
+| DELETE | `/api/playlists/:id` | Delete playlist |
+
+---
+
+## 🔐 Role-Based Access
+
+- 🎧 **Listener** → Browse & Play Songs  
+- 🎤 **Artist** → Upload Songs & Create Albums  
+- 🔒 Protected routes secured using JWT Middleware  
+
+---
+
+## 🧪 Testing
+
+You can test APIs using:
+
+- Postman  
+- Thunder Client  
+- Insomnia  
+
+For protected routes, add header:
+
+```
+Authorization: Bearer your_token_here
+```
+
+---
+
+## 🚀 Usage
+
 After starting the server, open:
-</p>
-<code>
-http://localhost:PORT
-</code>
 
-<p>
+```
+http://localhost:3000
+```
+
 Connect this backend to a frontend application or mobile app for full functionality.
+
+---
+
+## 🔮 Future Improvements
+
+- ❤️ Like & Favorite System  
+- 📊 Song Analytics  
+- 🔎 Search & Filter  
+- 📱 Frontend Integration  
+- ☁ Cloud Deployment (Render / Railway)  
+
+---
+
+## 🤝 Contributions
+
+Contributions are welcome!  
+Fork the repository and submit a pull request.
+
+---
+
+## 📜 License
+
+This project currently does not specify a license.
+
+---
+
+<p align="center">
+  Built with ❤️ using Node.js
 </p>
-
-<hr>
-
-<h2>🤝 Contributions</h2>
-<p>
-Contributions are welcome! Fork the repository, make changes, and submit a pull request.
-</p>
-
-<hr>
-
-<h2>📜 License</h2>
-<p>
-No license specified yet. Consider adding one if you want open-source contributions.
-</p>
-
-</div>
-
-</body>
-</html>
