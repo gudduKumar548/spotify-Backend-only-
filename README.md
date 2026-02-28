@@ -136,8 +136,8 @@ http://localhost:3000
 | Method | Route | Description |
 |--------|-------|------------|
 | GET | `/api/music/songs` | List all songs |
-| GET | `/api/music/albums` | List all songs |
-| GET | `/api/music/albums/:id` | List all songs |
+| GET | `/api/music/albums` | List all albums |
+| GET | `/api/music/albums/:id` | List album by id |
 | POST | `/api/music/upload` | Upload song (Artist only) |
 | POST | `/api/music/albums` | Add new album (Artist only) |
 | DELETE | `/api/playlists/:id` | Delete playlist |
