@@ -127,6 +127,7 @@ http://localhost:3000
 |--------|-------|------------|
 | POST | `/api/auth/register` | Register new user |
 | POST | `/api/auth/login` | Login and receive token |
+| POST | `/api/auth/logout` | Logout user/artist |
 
 ---
 
@@ -134,9 +135,11 @@ http://localhost:3000
 
 | Method | Route | Description |
 |--------|-------|------------|
-| GET | `/api/songs` | List all songs |
-| POST | `/api/songs` | Upload song (Artist only) |
-| POST | `/api/albums` | Add new album (Artist only) |
+| GET | `/api/music/songs` | List all songs |
+| GET | `/api/music/albums` | List all songs |
+| GET | `/api/music/albums/:id` | List all songs |
+| POST | `/api/music/upload` | Upload song (Artist only) |
+| POST | `/api/music/albums` | Add new album (Artist only) |
 | DELETE | `/api/playlists/:id` | Delete playlist |
 
 ---
