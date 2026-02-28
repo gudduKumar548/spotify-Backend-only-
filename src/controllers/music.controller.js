@@ -38,23 +38,90 @@ async function createAlbum(req, res) {
 }
 
 async function createPlaylist(req, res) {
-    const playlist = await playlistModel.create({
-        name: req.body.name,
-        user: req.user.id
-    });
-    return res.status(201).json(playlist);
+    try {
+        const { name, musics } = req.body;
+
+        if (!name) {
+            return res.status(400).json({ message: "Playlist name required" });
+        }
+        const musicsid = await playlistModel.findOne({ musics });
+        if (musicsid) {
+            return res.status(400).json({ message: "music already added in playlist" });
+        }
+
+        const playlist = await playlistModel.create({
+            name,
+            user: req.user.id,
+            musics: musics || []
+        });
+
+        return res.status(201).json(playlist);
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: "Server error" });
+    }
+}
+
+async function deletePlylist(req, res) {
+    try {
+        const playlistId = req.params.id;
+        const playlist = await playlistModel.findById(playlistId);
+
+        if (!playlist) {
+            return res.status(404).json({ message: "Playlist not found" });
+        }
+
+        if (playlist.user.toString() !== req.user.id) {
+            return res.status(403).json({ message: "Not authorized" });
+        }
+        await playlistModel.findByIdAndDelete(playlistId);
+        return res.status(200).json({ message: "playlist deleted successfully" });
+    } catch (error) {
+        return res.status(400).json({ message: "playlist not found" });
+    }
+}
+
+async function getAllPlaylist(req, res) {
+    try {
+        const playlists = await playlistModel.find({}).limit(10).populate("musics").populate("user", "username role");
+        if (playlists.length === 0) {
+            return res.status(404).json({ message: "No playlist found" });
+        }
+        return res.status(200).json(playlists);
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: "server error" });
+    }
+}
+
+async function getPlaylist(req, res) {
+    try {
+        const playlistId = req.params.id;
+        const playlist = await playlistModel.findById(playlistId);
+        if (!playlist) {
+            return res.status(404).json({ message: "no playlist found" });
+        }
+        if (playlist.user.toString() !== req.user.id) {
+            return res.status(403).json({ message: "Not authorized" });
+        }
+        return res.status(200).json(playlist);
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: "server error" });
+    }
 }
 
 async function getAllmusic(req, res) {
-    const musics = await musicModel.find().limit(10).populate("artist", "username email");
+    const musics = await musicModel.find().limit(10).populate("artist", "username role");
     if (!musics) {
         return res.status(403).json({ message: "Music not found" });
     }
-    return res.status(200).json({musics});
+    return res.status(200).json({ musics });
 }
 
 async function getAllAlbums(req, res) {
-    const albums = await albumModel.find().select("title artist").populate("artist", "username email");
+    const albums = await albumModel.find().select("title artist").populate("artist", "username role");
     return res.status(200).json({
         message: "Album fetched successfully",
         album: albums
@@ -63,11 +130,11 @@ async function getAllAlbums(req, res) {
 
 async function getAlbumById(req, res) {
     const id = req.params.id;
-    
-     const album = await albumModel
-      .findById(id)
-      .populate("artist", "username email")
-      .populate("musics");
+
+    const album = await albumModel
+        .findById(id)
+        .populate("artist", "username role")
+        .populate("musics");
     console.log(album);
     if (!album) {
         return res.status(403).json({ message: "album not found" });
@@ -75,4 +142,4 @@ async function getAlbumById(req, res) {
     return res.status(200).json(album);
 }
 
-module.exports = { createMusic, createAlbum, getAllmusic,getAllAlbums, getAlbumById };
+module.exports = { createMusic, createAlbum, createPlaylist, deletePlylist, getAllPlaylist,getPlaylist, getAllmusic, getAllAlbums, getAlbumById };
