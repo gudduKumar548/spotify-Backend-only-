@@ -1,5 +1,5 @@
 const express = require('express');
-const { createMusic, createAlbum, getAllmusic, getAllAlbums, getAlbumById } = require('../controllers/music.controller');
+const { createMusic, createAlbum, getAllmusic,getSong, getAllAlbums, getAlbumById } = require('../controllers/music.controller');
 const { authArtist,authUser } = require('../middlewares/auth.middleware');
 const multer = require('multer');
 
@@ -10,6 +10,7 @@ router.post('/upload', authArtist , upload.single('music'), createMusic);
 router.post('/albums', authArtist , createAlbum);
 
 router.get('/songs', authUser, getAllmusic);
+router.get('/songs/:id', authUser, getSong);
 router.get('/albums', authUser, getAllAlbums);
 router.get('/album/:id', authUser, getAlbumById);
 
