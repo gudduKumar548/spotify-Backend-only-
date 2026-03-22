@@ -119,6 +119,14 @@ async function getAllmusic(req, res) {
     }
     return res.status(200).json({ musics });
 }
+async function getSong(req, res) {
+    const id = req.params.id;
+    const music = await musicModel.findById(id); 
+    if (!music) {
+        return res.status(404).json({ message: "music not found" });
+    }
+    return res.status(200).json(music);
+}
 
 async function getAllAlbums(req, res) {
     const albums = await albumModel.find().select("title artist").populate("artist", "username role");
@@ -142,4 +150,4 @@ async function getAlbumById(req, res) {
     return res.status(200).json(album);
 }
 
-module.exports = { createMusic, createAlbum, createPlaylist, deletePlylist, getAllPlaylist,getPlaylist, getAllmusic, getAllAlbums, getAlbumById };
+module.exports = { createMusic, createAlbum, createPlaylist, deletePlylist, getAllPlaylist,getPlaylist, getAllmusic,getSong, getAllAlbums, getAlbumById };
