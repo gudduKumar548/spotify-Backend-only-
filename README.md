@@ -1,7 +1,7 @@
 <h1 align="center">🎧 Spotify Backend API</h1>
 
 <p align="center">
-  <b>A Role-Based RESTful Music Streaming Backend built with Node.js express, MongoDB & ImageKit</b>
+  <b>A Role-Based RESTful Music Streaming Backend built with Node.js express, MongoDB,JWT & ImageKit</b>
 </p>
 
 <p align="center">
