@@ -221,7 +221,3 @@ This project currently does not specify a license.
  
 ---
  
-<p align="center">
-  Built with ❤️ using Node.js | Deployed on Render 🚀
-</p>
- 
